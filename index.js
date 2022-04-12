@@ -52,7 +52,7 @@ app.use(
   morgan(
     'Date: :date[web] // Url: :remote-addr // Method: :method:url // Status::status // User-agent: :user-agent',
     {
-      stream: fs.createWriteStream('./access.log', { flags: 'a' })
+      stream: fs.createWriteStream('./resources/logs/wsAccess.log', { flags: 'a' })
     }
   )
 )
@@ -75,5 +75,3 @@ require('./routes/info.route')(app)
 require('./routes/ws.route')(app)
 
 app.listen(port)
-
-

@@ -5,7 +5,7 @@ exports.ws =  (ws ,req) => {
         const mess = `connection from: ${req.params.id} in ${req._remoteAddress} at ${req._startTime}.`
         const line = '\n'
         const initialMess =`Started ${mess}`
-        const file = './access.log'
+        const file = './resources/logs/wsAccess.log'
         console.log(initialMess)
         let writer = fs.createWriteStream(file, { flags: 'a' }) 
         writer.write(initialMess + line);
