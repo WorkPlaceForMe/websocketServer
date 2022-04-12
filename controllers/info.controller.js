@@ -1,4 +1,5 @@
 const fs = require('fs').promises;
+const axios = require('axios')
 
 exports.info = async (req, res) => {
     try{
@@ -8,4 +9,14 @@ exports.info = async (req, res) => {
     }catch(err){
         res.status(500).json({success: false, error: err})
     }
+}
+
+exports.infoMain = async (req, res) => {
+    const endpoint = `http://localhost:3300/api/serve/inf`
+    try {
+        const response = await axios.get(endpoint)
+        res.status(200).json({ success: true, mess: response.data.data})
+      } catch (err) {
+        res.status(500).json({success: false, error: err})
+      }
 }
