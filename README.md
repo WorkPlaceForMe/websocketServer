@@ -1,4 +1,4 @@
-# websocketServer
+# Websocket Server
 Server to communicate via websocket
 
 Installation:
