@@ -2,16 +2,19 @@ const express = require('express');
 const compression = require('compression')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-require('dotenv').config({ path: './config.env' })
+require('dotenv').config({ path: '../config.env' })
 const enableWs = require('express-ws')
 const morgan = require('morgan')
 const fs = require('fs')
+const path = require('path')
+const resourcesFolderPath = path.resolve(__dirname, './resources/pictures')
+const picResourceFolderPath = path.join(resourcesFolderPath)
 
 //init Express
 const app = express();
 enableWs(app)
 //init Express Router
-const router = express.Router();
+express.Router();
 const port = process.env.PORTWS || 3301;
 
 app.use(compression())
@@ -29,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
     ]
   }
   app.use(cors(corsOptions))
-  console.log(`Running on Production for http://${process.env.my_ip}:4200`)
+  console.log(`Running on Production on http://${process.env.my_ip}:${process.env.PORTWS}`)
 } else {
   const corsOptions = {
     origin: [
@@ -57,7 +60,6 @@ app.use(
   )
 )
 
-
 function customHeaders (req, res, next) {
   app.disable('X-Powered-By')
   res.setHeader('X-Powered-By', 'Graymatics-server')
@@ -73,5 +75,7 @@ app.use(customHeaders)
 
 require('./routes/info.route')(app)
 require('./routes/ws.route')(app)
+
+app.use('/api/pictures', express.static(picResourceFolderPath))
 
 app.listen(port)
